@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="form-container">
+  <h2 class="form-title">Student Registration</h2>
+  
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+  
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success %></div>
+  <% } %>
+  
+  <form action="/auth/register" method="POST">
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="cnic">CNIC (13 digits)</label>
+      <input type="text" id="cnic" name="cnic" class="form-control" pattern="[0-9]{13}" placeholder="1234567890123" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="form-control" minlength="6" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+  </form>
+  
+  <p style="text-align: center; margin-top: 1.5rem;">
+    Already have an account? <a href="/auth/login" style="color: var(--color-primary); font-weight: 600;">Login here</a>
+  </p>
+</div>
+
+<%- include('../partials/footer') %>

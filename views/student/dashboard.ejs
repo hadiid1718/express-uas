@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+
+<div class="dashboard-header">
+  <div class="container">
+    <h1 class="dashboard-title">Welcome, <%= studentName %>!</h1>
+    <p class="dashboard-subtitle">Manage your admission application</p>
+  </div>
+</div>
+
+<section style="padding: 4rem 0;">
+  <div class="container">
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <h3>Application Status</h3>
+        <% if (application) { %>
+          <p style="margin: 1rem 0;">
+            <strong>Status:</strong> 
+            <span class="badge badge-<%= application.status === 'Selected' ? 'selected' : application.status === 'Not Selected' ? 'rejected' : 'pending' %>">
+              <%= application.status %>
+            </span>
+          </p>
+          <p><strong>Program:</strong> <%= application.program %></p>
+          <p><strong>Merit Score:</strong> <%= application.meritScore.toFixed(2) %>%</p>
+          <p><strong>Submitted:</strong> <%= new Date(application.submittedAt).toLocaleDateString() %></p>
+        <% } else { %>
+          <p style="color: var(--pink); font-weight: 600;">No application submitted yet</p>
+        <% } %>
+        <a href="/student/apply" class="btn btn-primary" style="margin-top: 1rem;">
+          <%= application ? 'Update Application' : 'Apply Now' %>
+        </a>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">🏆</div>
+        <h3>Merit List</h3>
+        <p>Check the published merit list and your selection status</p>
+        <a href="/student/merit-list" class="btn btn-secondary" style="margin-top: 1rem;">View Merit List</a>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">ℹ️</div>
+        <h3>Important Information</h3>
+        <ul style="list-style-position: inside; color: var(--grayish-blue);">
+          <li>Merit calculated as percentage: (Matric % × 0.5) + (Inter % × 0.5)</li>
+          <li>Maximum marks: 1100 (100%)</li>
+          <li>You can update your application before merit list publication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

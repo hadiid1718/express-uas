@@ -1,0 +1,97 @@
+<%- include('../partials/header', {isAdmin: true}) %>
+
+<div class="dashboard-header">
+  <div class="container">
+    <h1 class="dashboard-title">All Applications</h1>
+    <p class="dashboard-subtitle">Manage student applications</p>
+  </div>
+</div>
+
+<section style="padding: 4rem 0;">
+  <div class="container">
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    
+    <div class="merit-form">
+      <h3 style="margin-bottom: 1.5rem; color: var(--dark-violet);">Generate Merit List</h3>
+      <form action="/admin/generate-merit" method="POST" style="display: flex; gap: 1rem; align-items: flex-end;">
+        <div class="form-group" style="flex: 1; margin-bottom: 0;">
+          <label for="cutoffScore">Cutoff Percentage (%)</label>
+          <input 
+            type="number" 
+            id="cutoffScore" 
+            name="cutoffScore" 
+            class="form-control" 
+            placeholder="e.g., 75" 
+            step="0.01"
+            min="0"
+            max="100"
+            required>
+        </div>
+        <button type="submit" class="btn btn-success">Generate Merit List</button>
+      </form>
+      <p style="margin-top: 1rem; color: var(--grayish-blue); font-size: 0.9rem;">
+        Students with merit percentage above or equal to cutoff will be selected. Enter value between 0-100%.
+      </p>
+    </div>
+    
+    <% if (applications.length > 0) { %>
+      <div class="table-container">
+        <h2 style="margin-bottom: 1.5rem; color: var(--dark-violet);">
+          Applications List (<%= applications.length %>)
+        </h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Sr#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>CNIC</th>
+              <th>Program</th>
+              <th>Matric</th>
+              <th>Inter</th>
+              <th>Merit Score</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% applications.forEach((app, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= app.student.name %></td>
+                <td><%= app.student.email %></td>
+                <td><%= app.student.cnic %></td>
+                <td><%= app.program %></td>
+                <td><%= app.matricMarks %></td>
+                <td><%= app.intermediateMarks %></td>
+                <td style="font-weight: 600; color: var(--color-primary);"><%= ((app.meritScore / 1100) * 100).toFixed(2) %>%
+</td>
+                <td>
+                  <span class="badge badge-<%= app.status === 'Selected' ? 'selected' : app.status === 'Not Selected' ? 'rejected' : 'pending' %>">
+                    <%= app.status %>
+                  </span>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div style="text-align: center; padding: 4rem 2rem; background-color: var(--white); border-radius: 15px;">
+        <h3 style="color: var(--grayish-blue);">No Applications Yet</h3>
+        <p style="color: var(--grayish-blue);">Students haven't submitted any applications yet.</p>
+      </div>
+    <% } %>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="/admin/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

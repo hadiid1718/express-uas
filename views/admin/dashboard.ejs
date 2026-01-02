@@ -1,0 +1,64 @@
+<%- include('../partials/header', {isAdmin: true}) %>
+
+<div class="dashboard-header">
+  <div class="container">
+    <h1 class="dashboard-title">Admin Dashboard</h1>
+    <p class="dashboard-subtitle">Manage university admissions</p>
+  </div>
+</div>
+
+<section style="padding: 4rem 0;">
+  <div class="container">
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    
+    <h2 style="margin-bottom: 2rem; color: var(--dark-violet);">Statistics Overview</h2>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number"><%= totalApplications %></div>
+        <div class="stat-label">Total Applications</div>
+      </div>
+      
+      <div class="stat-card" style="border-left-color: var(--orange);">
+        <div class="stat-number"><%= pendingApplications %></div>
+        <div class="stat-label">Pending Applications</div>
+      </div>
+      
+      <div class="stat-card" style="border-left-color: var(--lime-green);">
+        <div class="stat-number"><%= selectedApplications %></div>
+        <div class="stat-label">Selected Students</div>
+      </div>
+    </div>
+    
+    <div class="card-grid" style="margin-top: 3rem;">
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>View Applications</h3>
+        <p>View and manage all student applications with detailed information and merit scores.</p>
+        <a href="/admin/applications" class="btn btn-primary" style="margin-top: 1rem;">View All Applications</a>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">🏆</div>
+        <h3>Generate Merit List</h3>
+        <p>Generate and publish merit list based on cutoff scores. Notify selected students.</p>
+        <a href="/admin/applications" class="btn btn-secondary" style="margin-top: 1rem;">Generate Merit List</a>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Published Merit List</h3>
+        <p>View the published merit list with all selected and non-selected candidates.</p>
+        <a href="/admin/merit-list" class="btn btn-secondary" style="margin-top: 1rem;">View Merit List</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

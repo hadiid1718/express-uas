@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<div class="form-container" style="max-width: 700px;">
+  <h2 class="form-title"><%= application ? 'Update Application' : 'Apply for Admission' %></h2>
+  
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+  
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success %></div>
+  <% } %>
+  
+  <form action="/student/apply" method="POST">
+    <div class="form-group">
+      <label for="matricMarks">Matric Marks (Out of 1100)</label>
+      <input 
+        type="number" 
+        id="matricMarks" 
+        name="matricMarks" 
+        class="form-control" 
+        min="0" 
+        max="1100" 
+        value="<%= application ? application.matricMarks : '' %>"
+        required>
+    </div>
+    
+    <div class="form-group">
+      <label for="intermediateMarks">Intermediate Marks (Out of 1100)</label>
+      <input 
+        type="number" 
+        id="intermediateMarks" 
+        name="intermediateMarks" 
+        class="form-control" 
+        min="0" 
+        max="1100" 
+        value="<%= application ? application.intermediateMarks : '' %>"
+        required>
+    </div>
+    
+    <div class="form-group">
+      <label for="program">Select Program</label>
+      <select id="program" name="program" class="form-control" required>
+        <option value="">-- Choose Program --</option>
+        <option value="Computer Science" <%= application && application.program === 'Computer Science' ? 'selected' : '' %>>Computer Science</option>
+        <option value="Software Engineering" <%= application && application.program === 'Software Engineering' ? 'selected' : '' %>>Software Engineering</option>
+        <option value="Electrical Engineering" <%= application && application.program === 'Electrical Engineering' ? 'selected' : '' %>>Electrical Engineering</option>
+        <option value="Mechanical Engineering" <%= application && application.program === 'Mechanical Engineering' ? 'selected' : '' %>>Mechanical Engineering</option>
+        <option value="Business Administration" <%= application && application.program === 'Business Administration' ? 'selected' : '' %>>Business Administration</option>
+        <option value="Economics" <%= application && application.program === 'Economics' ? 'selected' : '' %>>Economics</option>
+      </select>
+    </div>
+    
+    <div style="background-color: var(--light-grayish-blue); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+      <p style="margin: 0; font-size: 0.95rem; color: var(--very-dark-violet);">
+        <strong>Merit Formula:</strong> Merit % = (Matric % × 0.5) + (Intermediate % × 0.5)
+      </p>
+      <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: var(--grayish-blue);">
+        Example: If Matric = 900/1100 (81.82%) and Inter = 950/1100 (86.36%), Merit = (81.82 × 0.5) + (86.36 × 0.5) = 84.09%
+      </p>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" style="width: 100%;">
+      <%= application ? 'Update Application' : 'Submit Application' %>
+    </button>
+  </form>
+  
+  <p style="text-align: center; margin-top: 1.5rem;">
+    <a href="/student/dashboard" style="color: var(--color-primary); font-weight: 600;">← Back to Dashboard</a>
+  </p>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - University Admission System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo"> UAS</a>
+      <nav>
+        <ul class="nav-links">
+          <% if (typeof studentName !== 'undefined') { %>
+            <li><a href="/student/dashboard">Dashboard</a></li>
+            <li><a href="/student/apply">Apply</a></li>
+            <li><a href="/student/merit-list">Merit List</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+          <% } else if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/applications">Applications</a></li>
+            <li><a href="/admin/merit-list">Merit List</a></li>
+            <li><a href="/admin/logout">Logout</a></li>
+          <% } else { %>
+            <li><a href="/">Home</a></li>
+            <li><a href="/auth/login">Student Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+  </header>
